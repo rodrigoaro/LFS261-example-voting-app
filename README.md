@@ -54,6 +54,11 @@ Architecture
 * A Node.js webapp which shows the results of the voting in real time
 
 
+
+  Worker Java App
+* Build Status [![Build Status](http://34.176.47.189:8080/buildStatus/icon?job=instavote%2Fworker-build)](http://34.176.47.189:8080/job/instavote/job/worker-build/)
+
+
 Note
 ----
 
