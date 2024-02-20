@@ -1,40 +1,34 @@
 pipeline {
-    agent any 
+    agent any
+	
+	tools{
+		maven 'maven 3.6.1'
+	}
 
     stages{
-        stage("one"){
+        stage("build"){
             steps{
-                echo 'step 1'
-                sleep 3
-            }
-        }
-        stage("two"){
-            steps{
-                echo 'step 2'
-                sleep 9
-            }
-        }
-        stage("three"){
-			when{
-				branch 'master'
-				changeset "**/worker/**"
-			}	
-				steps{
-					echo 'step 3'
-					sleep 5
+                echo 'Compiling worker app'
+				dir('worker'){
+					sh 'mvn compile'
 				}
+            }
+        }
+        stage("test"){
+            steps{
+                echo 'Running Unit Tests on worker app'
+            }
+        }
+        stage("package"){	
+			steps{
+				echo 'Packaging worker app'
+			}
 		}
     } 
 
     post{
       always{
-          echo 'This pipeline is completed.'
+          echo 'Building multibranch pipeline for worker is completed...'
       }
-	  failure{
-		slackSend (channel: "#ci-cd-test", message: "Build Failed: ${env.JOB_NAME} ${env.BUILD_NUMBER}")
-	  }
-	  success{
-		slackSend (channel: "#ci-cd-test", message: "Build Success: ${env.JOB_NAME} ${env.BUILD_NUMBER}")
-	  }
     }
 }
