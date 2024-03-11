@@ -32,7 +32,7 @@ services:
 
   result:
     image: rodrigoaro/result:latest
-    build: ./vote
+    build: ./result
     ports:
       - 5001:4000
     depends_on:
@@ -42,7 +42,7 @@ services:
 
   worker:
     image: rodrigoaro/worker:latest
-    build: ./vote
+    build: ./worker
     depends_on:
       - redis
       - db
